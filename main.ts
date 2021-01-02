@@ -1,17 +1,3 @@
-enum ActionKind {
-    RunningLeft,
-    RunningRight,
-    Idle,
-    IdleLeft,
-    IdleRight,
-    JumpingLeft,
-    JumpingRight,
-    CrouchLeft,
-    CrouchRight,
-    Flying,
-    Walking,
-    Jumping
-}
 namespace SpriteKind {
     export const Bumper = SpriteKind.create()
     export const Goal = SpriteKind.create()
@@ -25,7 +11,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Bumper, function (sprite, otherS
         sprite.vy = -2 * pixelsToMeters
     } else {
         info.changeLifeBy(-1)
-        sprite.say("Oww!", invincibilityPeriod)
+        sprite.say("Owwww!", invincibilityPeriod)
         music.powerDown.play()
     }
     pause(invincibilityPeriod)
@@ -856,6 +842,20 @@ let gravity = 0
 let pixelsToMeters = 0
 let invincibilityPeriod = 0
 let hero: Sprite = null
+class ActionKind {
+    static RunningLeft = 0
+    static RunningRight = 1
+    static Idle = 2
+    static IdleLeft = 3
+    static IdleRight = 4
+    static JumpingLeft = 5
+    static JumpingRight = 6
+    static CrouchLeft = 7
+    static CrouchRight = 8
+    static Flying = 9
+    static Walking = 10
+    static Jumping = 11
+}
 hero = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . f f f f f f f f f f . . . 
@@ -1033,12 +1033,10 @@ game.onUpdate(function () {
         animation.setAction(hero, ActionKind.RunningLeft)
     } else if (hero.vx > 0) {
         animation.setAction(hero, ActionKind.RunningRight)
+    } else if (heroFacingLeft) {
+        animation.setAction(hero, ActionKind.IdleLeft)
     } else {
-        if (heroFacingLeft) {
-            animation.setAction(hero, ActionKind.IdleLeft)
-        } else {
-            animation.setAction(hero, ActionKind.IdleRight)
-        }
+        animation.setAction(hero, ActionKind.IdleRight)
     }
 })
 // Flier movement
