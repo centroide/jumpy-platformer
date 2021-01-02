@@ -25,7 +25,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Bumper, function (sprite, otherS
         sprite.vy = -2 * pixelsToMeters
     } else {
         info.changeLifeBy(-1)
-        sprite.say("Ow!", invincibilityPeriod)
+        sprite.say("Oww!", invincibilityPeriod)
         music.powerDown.play()
     }
     pause(invincibilityPeriod)
